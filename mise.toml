@@ -1,0 +1,44 @@
+[tools]
+zig = "0.16.0"
+zls = "0.16.0"
+
+[tasks.fmt]
+description = "format"
+run = "zig fmt src/"
+
+[tasks."fmt-check"]
+description = "format check"
+run = "zig fmt --check src/"
+
+[tasks.lint]
+description = "lint"
+run = "zig-lint"
+
+[tasks.build]
+description = "build"
+run = "zig build --summary all"
+
+[tasks.test]
+description = "test"
+run = "zig build test --summary all"
+
+[tasks."example:basic"]
+description = "run basic example"
+run = "zig build run-example-basic --summary all -- $@"
+
+[tasks."example:allow-done"]
+description = "run allow/done example"
+run = "zig build run-example-allow-done --summary all -- $@"
+
+[tasks.build-docs]
+description = "build API documentation"
+run = "zig build docs --summary all"
+
+[tasks.serve-docs]
+description = "serve API documentation"
+depends = ["build-docs"]
+run = "npx --yes serve zig-out/docs"
+
+[tasks.release]
+description = "bump version, commit, tag, and push"
+run = "zig-release $@"
